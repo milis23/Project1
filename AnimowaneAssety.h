@@ -1,26 +1,26 @@
 #ifndef ANIMOWANEASSETY_H
 #define ANIMOWANEASSETY_H
-#include<SFML/Graphics.hpp>
-#include<iostream>
-#include<string>
-#include<vector>
+
+#include <SFML/Graphics.hpp>
+#include <random>
+
 class AnimowaneAssety
 {
 public:
-    virtual ~AnimowaneAssety() {}
+    AnimowaneAssety(float startX, float startY, float angle, float speed);
 
-    virtual void update() = 0;
-    virtual void render() = 0;
+    void update(float deltaTime);
+    void draw(sf::RenderWindow& window);
 
-    float getVelocityX() const { return velocity_x; }
-    void setVelocityX(float velocity) { velocity_x = velocity; }
+    sf::Vector2f getPosition() const;
 
-    float getVelocityY() const { return velocity_y; }
-    void setVelocityY(float velocity) { velocity_y = velocity; }
-
-private:
-    float velocity_x;
-    float velocity_y;
+protected:
+    sf::Sprite m_sprite;
+    sf::Texture m_texture;
+    sf::Vector2f m_position;
+    sf::Vector2f m_velocity;
+    float acceleration = 1.02;
+    virtual void handleCollision() = 0;
 };
 
 #endif // ANIMOWANEASSETY_H

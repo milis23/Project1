@@ -10,9 +10,9 @@ Game::Game() : window(sf::VideoMode(1920, 1080), "ShooterGame", sf::Style::Fulls
     champion.setTexture("champion1.png");
     champion.setScale(champion.getScale().x/30,champion.getScale().y/30);
     weapon.setTexture("weapon.png");
-    champion.setPosition(window.getSize().x/2, 905.f);
+    champion.setPosition(window.getSize().x/2,905);
     champion.setMovementSpeed(200.0f);
-    weapon.setPosition(window.getSize().x / 2, 905.f);
+    weapon.setPosition(window.getSize().x /2,905);
 }
 
 void Game::run()
