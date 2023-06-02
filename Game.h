@@ -17,6 +17,7 @@ private:
     Background background;
     Champion champion;
     Weapon weapon;
+    
     void processEvents();
     void update(float deltaTime);
     void render();

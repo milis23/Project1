@@ -12,7 +12,7 @@ Game::Game() : window(sf::VideoMode(1920, 1080), "ShooterGame", sf::Style::Fulls
     weapon.setTexture("weapon.png");
     champion.setPosition(window.getSize().x/2, 905.f);
     champion.setMovementSpeed(200.0f);
-    champion.setWeaponOffset(50.0f, 20.0f);
+    weapon.setPosition(window.getSize().x / 2, 905.f);
 }
 
 void Game::run()
@@ -46,6 +46,7 @@ void Game::processEvents()
             else if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D)
             {
                 champion.handleInput(event.key.code, true);
+                weapon.handleInput(event.key.code, true);
             }
         }
         else if (event.type == sf::Event::KeyReleased)
@@ -53,6 +54,7 @@ void Game::processEvents()
             if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D)
             {
                 champion.handleInput(event.key.code, false);
+                weapon.handleInput(event.key.code, false);
             }
         }
     }
@@ -61,12 +63,12 @@ void Game::processEvents()
 void Game::update(float deltaTime)
 {
     champion.update(deltaTime);
+    weapon.update(deltaTime);
 }
 
 void Game::render()
 {
     window.clear();
-
     background.draw(window);
     champion.draw(window);
     weapon.draw(window);

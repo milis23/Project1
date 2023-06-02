@@ -32,11 +32,6 @@ void Champion::setMovementSpeed(float speed)
     m_movementSpeed = speed;
 }
 
-void Champion::setWeaponOffset(float offsetX, float offsetY)
-{
-    m_weapon.setOffset(offsetX, offsetY);
-}
-
 void Champion::update(float deltaTime)
 {
     // Poruszanie siê bohatera w zale¿noœci od wciœniêtych klawiszy
@@ -67,11 +62,13 @@ void Champion::handleInput(sf::Keyboard::Key key, bool isPressed)
     {
         m_isMovingLeft = isPressed;
         m_sprite.setScale(-3.0f, 3.0f); // Obrócenie tekstury w lewo
+        m_weapon.setScale(-2.5f, 2.5f);
     }
     else if (key == sf::Keyboard::D)
     {
         m_isMovingRight = isPressed;
         m_sprite.setScale(3.0f, 3.0f); // Resetowanie skali (brak obrotu)
+        m_weapon.setScale(2.5f, 2.5f);
     }
 }
 

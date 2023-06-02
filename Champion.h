@@ -10,7 +10,6 @@ public:
     void setPosition(float x, float y);
     void setTexture(const std::string& texturePath);
     void setMovementSpeed(float speed);
-    void setWeaponOffset(float offsetX, float offsetY);
     void update(float deltaTime);
     void draw(sf::RenderWindow& window);
     void handleInput(sf::Keyboard::Key key, bool isPressed);

@@ -1,20 +1,27 @@
-#pragma once
+#ifndef WEAPON_H
+#define WEAPON_H
 
 #include <SFML/Graphics.hpp>
 
-class Weapon
+class Weapon :public sf::Sprite
 {
 public:
     Weapon();
-    void setPosition(float x, float y);
+
     void setTexture(const std::string& texturePath);
-    void setOffset(float offsetX, float offsetY);
+    void setPosition(float x, float y);
     void updatePosition(const sf::Vector2f& championPosition);
-    sf::Vector2f getPosition();
+    void setMovementSpeed(float speed);
+    void update(float deltaTime);
     void draw(sf::RenderWindow& window);
+    void handleInput(sf::Keyboard::Key key, bool isPressed);
 private:
     sf::Texture m_texture;
     sf::Sprite m_sprite;
-    float m_offsetX;
-    float m_offsetY;
+    bool m_isMovingLeft;
+    bool m_isMovingRight;
+    float m_movementSpeed;
+    sf::Vector2f m_position;
 };
+
+#endif // WEAPON_H
