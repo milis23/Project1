@@ -8,11 +8,10 @@ Bomb::Bomb(float startX, float startY, float angle, float speed)
     {
         // Obs³uga b³êdu ³adowania tekstury dla bomby
     }
-
+    m_sprite.setPosition(startX, startY);
     m_sprite.setTexture(m_texture);
     // Dodatkowe konfiguracje sprite'a dla bomby
 }
-
 void Bomb::handleCollision()
 {
     // Obs³uga kolizji dla bomby
