@@ -80,7 +80,6 @@ void Champion::handleInput(sf::Keyboard::Key key, bool isPressed)
         m_isMovingRight = isPressed;
         m_sprite.setScale(3.0f, 3.0f); // Resetowanie skali (brak obrotu)
         m_weapon.setScale(2.5f, 2.5f);
-
     }
 }
 

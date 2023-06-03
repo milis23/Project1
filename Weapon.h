@@ -16,6 +16,7 @@ public:
     void draw(sf::RenderWindow& window);
     void handleInput(sf::Keyboard::Key key, bool isPressed);
     sf::Vector2f gettipPosition();
+    void settipPosition(float x,float y);
 private:
     sf::Vector2f weapontipposition;
     sf::Texture m_texture;

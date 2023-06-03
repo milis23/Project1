@@ -160,6 +160,7 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="net.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
@@ -172,6 +173,7 @@
     <ClInclude Include="Champion.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="net.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

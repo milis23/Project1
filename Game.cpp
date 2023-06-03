@@ -10,9 +10,10 @@ Game::Game() : window(sf::VideoMode(1920, 1080), "ShooterGame", sf::Style::Fulls
     champion.setTexture("champion1.png");
     champion.setScale(champion.getScale().x/30,champion.getScale().y/30);
     weapon.setTexture("weapon.png");
-    champion.setPosition(window.getSize().x/2,905);
+    champion.setPosition(static_cast<float>(window.getSize().x/2),static_cast<float>(905));
     champion.setMovementSpeed(200.0f);
-    weapon.setPosition(window.getSize().x /2,905);
+    weapon.setPosition(static_cast<float>(window.getSize().x / 2),static_cast<float>(905));
+
 }
 
 void Game::run()
@@ -45,6 +46,7 @@ void Game::processEvents()
             }
             else if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D)
             {
+                moved = true;
                 champion.handleInput(event.key.code, true);
                 weapon.handleInput(event.key.code, true);
             }
@@ -53,13 +55,31 @@ void Game::processEvents()
             else if ((event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D) && (framecounter % 16 > 0)&&(framecounter%16<8))
                 champion.changetexture("bieg2.png");
         }
-        else if (event.type == sf::Event::MouseButtonPressed && (event.mouseButton.button == sf::Mouse::Right || event.mouseButton.button == sf::Mouse::Left))
+        else if ((event.type == sf::Event::MouseButtonPressed && (event.mouseButton.button == sf::Mouse::Right || event.mouseButton.button == sf::Mouse::Left))&&moved==true)
         {
-            mousePosition.x = sf::Mouse::getPosition(window).x;
-            mousePosition.y = sf::Mouse::getPosition(window).y;
+            mousePosition.x = static_cast<float>(sf::Mouse::getPosition(window).x);
+            mousePosition.y = static_cast<float>(sf::Mouse::getPosition(window).y);
             normalizategunmouse = (mousePosition - weapon.gettipPosition())/sqrt((mousePosition.x - weapon.gettipPosition().x)* (mousePosition.x - weapon.gettipPosition().x) + (mousePosition.y - weapon.gettipPosition().y) * (mousePosition.y - weapon.gettipPosition().y));
-            AnimowaneAssety* newbullet = nullptr;
-            newbullet = new Bullet(weapon.gettipPosition().x, weapon.gettipPosition().y, normalizategunmouse.x * 400, normalizategunmouse.y * 400);
+            if (event.mouseButton.button == sf::Mouse::Left) {
+                Bullet* newbullet = nullptr;
+                float angle = std::atan2(normalizategunmouse.y, normalizategunmouse.x);
+                float degrees = static_cast<float>(angle * 180 / 3.14159265358979323846);
+                newbullet = new Bullet(weapon.gettipPosition().x, weapon.gettipPosition().y, normalizategunmouse.x * 400, normalizategunmouse.y * 400,degrees);
+
+                bullets.emplace_back(newbullet);
+
+                std::cout << "utworzono pocisk" << std::endl;
+            }
+            if (event.mouseButton.button == sf::Mouse::Right) {
+                Net* newnet = nullptr;
+                float angle = std::atan2(normalizategunmouse.y, normalizategunmouse.x);
+                float degrees = static_cast<float>(angle * 180 / 3.14159265358979323846);
+                newnet = new Net(weapon.gettipPosition().x, weapon.gettipPosition().y, normalizategunmouse.x * 400, normalizategunmouse.y * 400, degrees);
+
+                nets.emplace_back(newnet);
+
+                std::cout << "utworzono pocisk" << std::endl;
+            }
         }
         else if (event.type == sf::Event::KeyReleased)
         {
@@ -97,6 +117,10 @@ void Game::update(float deltaTime)
     {
         obiekt->update(deltaTime);
     }
+    for (auto& obiekt : nets)
+    {
+        obiekt->update(deltaTime);
+    }
     // Aktualizacja obiektów
 }
 
@@ -109,6 +133,16 @@ void Game::render()
     champion.draw(window);
     weapon.draw(window);
     for (auto& obiekt : assets)
+    {
+        obiekt->draw(window);
+
+    }
+    for (auto& obiekt : bullets)
+    {
+        obiekt->draw(window);
+
+    }
+    for (auto& obiekt : nets)
     {
         obiekt->draw(window);
 
@@ -130,11 +164,11 @@ void Game::spawnAsset()
 
     // Stwórz aktywo na podstawie wybranego typu
     AnimowaneAssety* newAsset = nullptr;
-    if (assetType < 8) {
+    if (assetType < 8&&moved==true) {
         newAsset = new Bomb(xPos, 0, xVelocity,yVelocity);
         std::cout << "utworzono bombe" << std::endl;
     }
-    else {
+    else if(moved==true){
         switch (assetType)
         {
         case 8:

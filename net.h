@@ -1,12 +1,12 @@
-#ifndef BULLET_H
-#define BULLET_H
+#ifndef NET_H
+#define NET_H
 #include"AnimowaneAssety.h"
 #include <SFML/Graphics.hpp>
 
-class Bullet :public AnimowaneAssety
+class Net :public AnimowaneAssety
 {
 public:
-    Bullet(float startX, float startY, float speedx, float speedy,float degres);
+    Net(float startX, float startY, float speedx, float speedy, float degres);
 
     void update(float deltaTime);
     void render(sf::RenderWindow& window);
@@ -20,5 +20,4 @@ protected:
 private:
 };
 
-#endif // BULLET_H
-
+#endif // NET_H

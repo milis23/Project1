@@ -53,7 +53,10 @@ void Weapon::update(float deltaTime)
     m_sprite.setPosition(m_position);
 
 }
-
+void Weapon::settipPosition(float x,float y) {
+    weapontipposition.x = x;
+    weapontipposition.y = y;
+}
 void Weapon::handleInput(sf::Keyboard::Key key, bool isPressed)
 {
     if (key == sf::Keyboard::A)
@@ -71,8 +74,6 @@ void Weapon::handleInput(sf::Keyboard::Key key, bool isPressed)
         m_sprite.setScale(2.5f, 2.5f); // Resetowanie skali (brak obrotu)
         weapontipposition.x = m_sprite.getPosition().x + m_sprite.getGlobalBounds().width;
         weapontipposition.y = m_sprite.getPosition().y + m_sprite.getGlobalBounds().height / 2;
-        std::cout << weapontipposition.x << std::endl;
-        std::cout << weapontipposition.y << std::endl;
     }
 }
 sf::Vector2f Weapon::gettipPosition() {

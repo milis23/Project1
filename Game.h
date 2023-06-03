@@ -11,7 +11,9 @@
 #include "Champion.h"
 #include<iostream>
 #include"Bullet.h"
-
+#include<Windows.h>
+#include<cmath>
+#include"net.h"
 class Game
 {
 public:
@@ -22,18 +24,20 @@ public:
     int framecounter = 0;
 
 private:
+    bool isPaused = false;
+    bool moved = false;
     sf::RenderWindow window;
     Background background;
     Champion champion;
     Weapon weapon;
     sf::Clock clock;
-    float spawnTimer;
+    float spawnTimer=0;
     float spawnInterval = 1;
-    std::mt19937 generator;
     sf::Vector2f mousePosition;
     sf::Vector2f normalizategunmouse;
     std::vector<AnimowaneAssety*> assets;
     std::vector<Bullet*>bullets;
+    std::vector<Net*>nets;
     std::uniform_real_distribution<float> xPosDistribution;
     std::uniform_real_distribution<float> angleDistribution;
     std::uniform_real_distribution<float> speedDistribution;
