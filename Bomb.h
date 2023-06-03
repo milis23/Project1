@@ -6,10 +6,11 @@
 class Bomb : public AnimowaneAssety
 {
 public:
-    Bomb(float startX, float startY, float angle, float speedx,float speedy);
-protected:
-    void handleCollision() override;
+    Bomb(float startX, float startY, float speedx, float speedy);
 
+protected:
+    virtual void collide(AnimowaneAssety& col);
+    void handleCollision(sf::RenderWindow& window) override;
 };
 
-#endif // BOMB_H
+#endif // AID_H

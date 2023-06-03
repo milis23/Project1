@@ -1,22 +1,28 @@
 #include "Shield.h"
 
-Shield::Shield(float startX, float startY, float angle, float speedx, float speedy)
-    : AnimowaneAssety(startX, startY, angle, speedx,speedy)
+Shield::Shield(float startX, float startY, float speedx, float speedy)
+    : AnimowaneAssety(startX, startY, speedx,speedy)
 {
     // Inicjalizacja sprite'a i tekstury dla tarczy
     if (!m_texture.loadFromFile("shield.png"))
     {
         // Obs?uga b??du ?adowania tekstury dla bomby
     }
+    ObjectType type = ObjectType::SHIELD;
     m_sprite.setPosition(startX, startY);
     m_sprite.setTexture(m_texture);
     m_velocity.x = speedx;
     m_velocity.y = speedy;
     // Dodatkowe konfiguracje sprite'a dla bomby
 }
+void Shield::collide(AnimowaneAssety& col) {
 
-void Shield::handleCollision()
+}
+void Shield::handleCollision(sf::RenderWindow& window)
 {
     // Obs?uga kolizji dla tarczy
     // Mo?esz doda? tu odpowiednie akcje w przypadku kolizji
+    if (m_sprite.getPosition().y > 915) {
+        m_sprite.setPosition(m_sprite.getPosition().x, 915);
+    }
 }

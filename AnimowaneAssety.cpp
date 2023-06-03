@@ -1,6 +1,6 @@
 #include "AnimowaneAssety.h"
 
-AnimowaneAssety::AnimowaneAssety(float startX, float startY, float angle, float speedx,float speedy)
+AnimowaneAssety::AnimowaneAssety(float startX, float startY, float speedx,float speedy)
 {
     // Inicjalizacja sprite'a, tekstury i pozycji
     // startX i startY - pocz¹tkowe wspó³rzêdne obiektu
@@ -21,10 +21,17 @@ void AnimowaneAssety::update(float deltaTime)
     // Aktualizacja pozycji na podstawie prêdkoœci
     m_position += m_velocity * deltaTime;
     m_sprite.move(m_velocity * deltaTime);
-    // Sprawdzenie kolizji ze œcianami lub innymi obiektami
-    handleCollision();
-}
 
+    
+    // Sprawdzenie kolizji ze œcianami lub innymi obiektami
+    handleCollision(m_window);
+}
+void AnimowaneAssety::changevelocityx(float speedx) {
+    this->m_velocity.x = speedx;
+}
+void AnimowaneAssety::changevelocityy(float speedy) {
+    this->m_velocity.y = speedy;
+}
 void AnimowaneAssety::draw(sf::RenderWindow& window)
 {
     // Narysowanie sprite'a na oknie renderowania

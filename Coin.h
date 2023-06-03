@@ -6,11 +6,11 @@
 class Coin : public AnimowaneAssety
 {
 public:
-    Coin(float startX, float startY, float angle, float speedx, float speedy);
+    Coin(float startX, float startY, float speedx, float speedy);
 
 protected:
-    void handleCollision() override;
-
+    void handleCollision(sf::RenderWindow& window) override;
+    virtual void collide(AnimowaneAssety& col);
 };
 
 #endif // COIN_H

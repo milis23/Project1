@@ -6,10 +6,11 @@
 class Aid : public AnimowaneAssety
 {
 public:
-    Aid(float startX, float startY, float angle, float speedx, float speedy);
+    Aid(float startX, float startY, float speedx, float speedy);
 
 protected:
-    void handleCollision() override;
+    virtual void collide(AnimowaneAssety& col);
+    void handleCollision(sf::RenderWindow& window) override;
 };
 
 #endif // AID_H

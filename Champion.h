@@ -16,6 +16,7 @@ public:
     void livesplus();
     void livesminus();
     void changetexture(const std::string& texturePath);
+    int getlives();
 private:
     sf::Texture m_texture;
     sf::Sprite m_sprite;

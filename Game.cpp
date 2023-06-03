@@ -7,11 +7,6 @@ Game::Game() : window(sf::VideoMode(1920, 1080), "ShooterGame", sf::Style::Fulls
     {
         // Obs³uga b³êdu ³adowania tekstury t³a
     }
-    std::random_device rd;
-    generator = std::mt19937(rd());
-    xPosDistribution = std::uniform_real_distribution<float>(50.0f, 750.0f);
-    angleDistribution = std::uniform_real_distribution<float>(45.0f, 135.0f);
-    speedDistribution = std::uniform_real_distribution<float>(100.0f, 200.0f);
     champion.setTexture("champion1.png");
     champion.setScale(champion.getScale().x/30,champion.getScale().y/30);
     weapon.setTexture("weapon.png");
@@ -58,6 +53,14 @@ void Game::processEvents()
             else if ((event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D) && (framecounter % 16 > 0)&&(framecounter%16<8))
                 champion.changetexture("bieg2.png");
         }
+        else if (event.type == sf::Event::MouseButtonPressed && (event.mouseButton.button == sf::Mouse::Right || event.mouseButton.button == sf::Mouse::Left))
+        {
+            mousePosition.x = sf::Mouse::getPosition(window).x;
+            mousePosition.y = sf::Mouse::getPosition(window).y;
+            normalizategunmouse = (mousePosition - weapon.gettipPosition())/sqrt((mousePosition.x - weapon.gettipPosition().x)* (mousePosition.x - weapon.gettipPosition().x) + (mousePosition.y - weapon.gettipPosition().y) * (mousePosition.y - weapon.gettipPosition().y));
+            AnimowaneAssety* newbullet = nullptr;
+            newbullet = new Bullet(weapon.gettipPosition().x, weapon.gettipPosition().y, normalizategunmouse.x * 400, normalizategunmouse.y * 400);
+        }
         else if (event.type == sf::Event::KeyReleased)
         {
             if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D)
@@ -67,6 +70,7 @@ void Game::processEvents()
                 champion.changetexture("champion1.png");
             }
         }
+        
     }
 }
 
@@ -87,6 +91,11 @@ void Game::update(float deltaTime)
     {
         obiekt->update(deltaTime);
 
+
+    }
+    for (auto& obiekt : bullets)
+    {
+        obiekt->update(deltaTime);
     }
     // Aktualizacja obiektów
 }
@@ -111,34 +120,33 @@ void Game::render()
 void Game::spawnAsset()
 {
     // Wygeneruj losow¹ pozycjê x na górze ekranu
-    float xPos = static_cast<float>(rand() % window.getSize().x);
+    float xPos = static_cast<float>(10+rand() % window.getSize().x-20);
 
     // Wygeneruj losow¹ prêdkoœæ x i y
-    float xVelocity = static_cast<float>(rand() % 200 - 100);
+    float xVelocity = static_cast<float>(rand() % 201 - 100);
     float yVelocity = static_cast<float>(rand() % 200 + 100);
-    float angle = angleDistribution(generator);
     // Wybierz losowy typ aktywa
     int assetType = rand() % 11; // 0 - Coin, 1 - Shield, 2 - Aid
 
     // Stwórz aktywo na podstawie wybranego typu
     AnimowaneAssety* newAsset = nullptr;
     if (assetType < 8) {
-        newAsset = new Bomb(xPos, 0, angle, xVelocity,yVelocity);
+        newAsset = new Bomb(xPos, 0, xVelocity,yVelocity);
         std::cout << "utworzono bombe" << std::endl;
     }
     else {
         switch (assetType)
         {
         case 8:
-            newAsset = new Coin(xPos, 0, angle,0, yVelocity);
+            newAsset = new Coin(xPos, 0,0, yVelocity);
             std::cout << "utworzono monete" << std::endl;
             break;
         case 9:
-            newAsset = new Shield(xPos, 0, angle,0, yVelocity);
+            newAsset = new Shield(xPos, 0,0, yVelocity);
             std::cout << "utworzono tarcze" << std::endl;
             break;
         case 10:
-            newAsset = new Aid(xPos, 0, angle,0, yVelocity);
+            newAsset = new Aid(xPos, 0,0, yVelocity);
             std::cout << "utworzono apteczke" << std::endl;
             break;
         default:

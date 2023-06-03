@@ -10,6 +10,7 @@
 #include "Background.h"
 #include "Champion.h"
 #include<iostream>
+#include"Bullet.h"
 
 class Game
 {
@@ -25,12 +26,14 @@ private:
     Background background;
     Champion champion;
     Weapon weapon;
-    std::vector<std::unique_ptr<AnimowaneAssety>> obiekty;
-    std::vector<AnimowaneAssety*> assets;
     sf::Clock clock;
-    float spawnTimer=0;
-    float spawnInterval=3;
+    float spawnTimer;
+    float spawnInterval = 1;
     std::mt19937 generator;
+    sf::Vector2f mousePosition;
+    sf::Vector2f normalizategunmouse;
+    std::vector<AnimowaneAssety*> assets;
+    std::vector<Bullet*>bullets;
     std::uniform_real_distribution<float> xPosDistribution;
     std::uniform_real_distribution<float> angleDistribution;
     std::uniform_real_distribution<float> speedDistribution;

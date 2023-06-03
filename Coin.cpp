@@ -1,23 +1,28 @@
 #include "Coin.h"
 
-Coin::Coin(float startX, float startY, float angle, float speedx, float speedy)
-    : AnimowaneAssety(startX, startY, angle, speedx,speedy)
+Coin::Coin(float startX, float startY, float speedx, float speedy)
+    : AnimowaneAssety(startX, startY, speedx,speedy)
 {
     // Inicjalizacja sprite'a i tekstury dla monety
     if (!m_texture.loadFromFile("coin.png"))
     {
         // Obs?uga b??du ?adowania tekstury dla bomby
     }
-    setScale(getScale().x/4, getScale().y/4);
+    ObjectType type = ObjectType::COIN;
     m_sprite.setPosition(startX, startY);
     m_sprite.setTexture(m_texture);
     m_velocity.x = speedx;
     m_velocity.y = speedy;
     // Dodatkowe konfiguracje sprite'a dla bomby
 }
+void Coin::collide(AnimowaneAssety& col) {
 
-void Coin::handleCollision()
+}
+void Coin::handleCollision(sf::RenderWindow& window)
 {
     // Obs?uga kolizji dla monety
     // Mo?esz doda? tu odpowiednie akcje w przypadku kolizji
+    if (m_sprite.getPosition().y > 915) {
+        m_sprite.setPosition(m_sprite.getPosition().x, 915);
+    }
 }

@@ -1,19 +1,20 @@
 #include "Weapon.h"
-
+#include<iostream>
 void Weapon::setTexture(const std::string& texturePath)
 {
     if (!m_texture.loadFromFile(texturePath))
     {
         // Obs³uga b³êdu ³adowania tekstury broni
     }
-
+    weapontipposition.x = m_sprite.getPosition().x + m_sprite.getGlobalBounds().width;
+    weapontipposition.y = m_sprite.getPosition().y + m_sprite.getGlobalBounds().height / 2;
     m_sprite.setTexture(m_texture);
     m_sprite.setScale(2.5, 2.5);
 }
 
 void Weapon::setPosition(float x, float y)
 {
-    m_position.x = x;
+    m_position.x = x; 
     m_position.y = y;
 }
 
@@ -59,10 +60,21 @@ void Weapon::handleInput(sf::Keyboard::Key key, bool isPressed)
     {
         m_isMovingLeft = isPressed;
         m_sprite.setScale(-2.5f, 2.5f);
+        weapontipposition.x = m_sprite.getPosition().x-m_sprite.getGlobalBounds().width;
+        weapontipposition.y = m_sprite.getPosition().y + m_sprite.getGlobalBounds().height / 2;
+
+
     }
     else if (key == sf::Keyboard::D)
     {
         m_isMovingRight = isPressed;
         m_sprite.setScale(2.5f, 2.5f); // Resetowanie skali (brak obrotu)
+        weapontipposition.x = m_sprite.getPosition().x + m_sprite.getGlobalBounds().width;
+        weapontipposition.y = m_sprite.getPosition().y + m_sprite.getGlobalBounds().height / 2;
+        std::cout << weapontipposition.x << std::endl;
+        std::cout << weapontipposition.y << std::endl;
     }
+}
+sf::Vector2f Weapon::gettipPosition() {
+    return weapontipposition;
 }
