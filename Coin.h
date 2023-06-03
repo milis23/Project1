@@ -6,11 +6,11 @@
 class Coin : public AnimowaneAssety
 {
 public:
-    Coin(float startX, float startY, float angle, float speed);
+    Coin(float startX, float startY, float angle, float speedx, float speedy);
 
 protected:
     void handleCollision() override;
+
 };
 
 #endif // COIN_H
-

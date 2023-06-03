@@ -50,6 +50,17 @@ void Champion::update(float deltaTime)
     m_weapon.updatePosition(m_position);
 }
 
+void Champion::changetexture(const std::string& texturePath) {
+    if (!m_texture.loadFromFile(texturePath))
+    {
+        // Obs³uga b³êdu ³adowania tekstury bohatera
+    }
+
+    m_sprite.setTexture(m_texture);
+
+    
+}
+
 void Champion::draw(sf::RenderWindow& window)
 {
     window.draw(m_sprite);

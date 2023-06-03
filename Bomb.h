@@ -6,9 +6,10 @@
 class Bomb : public AnimowaneAssety
 {
 public:
-    Bomb(float startX, float startY, float angle, float speed);
+    Bomb(float startX, float startY, float angle, float speedx,float speedy);
 protected:
     void handleCollision() override;
+
 };
 
 #endif // BOMB_H

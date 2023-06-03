@@ -4,10 +4,10 @@
 #include <SFML/Graphics.hpp>
 #include <random>
 
-class AnimowaneAssety
+class AnimowaneAssety: public sf::Sprite
 {
 public:
-    AnimowaneAssety(float startX, float startY, float angle, float speed);
+    AnimowaneAssety(float startX, float startY, float angle, float speedx,float speedy);
 
     void update(float deltaTime);
     void draw(sf::RenderWindow& window);

@@ -15,6 +15,7 @@ public:
     void handleInput(sf::Keyboard::Key key, bool isPressed);
     void livesplus();
     void livesminus();
+    void changetexture(const std::string& texturePath);
 private:
     sf::Texture m_texture;
     sf::Sprite m_sprite;
