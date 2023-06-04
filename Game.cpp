@@ -44,7 +44,17 @@ void Game::run()
         }
     }
 }
-
+void Game::checkCollisions()
+{
+    for (auto it = assets.begin(); it != assets.end(); ++it) {
+        if (bullet.getBounds().intersects((*it)->getBounds())) {
+            // Pocisk zderzy³ siê z obiektem
+            // Usuñ obiekt z listy assets
+            assets.erase(it);
+            break;
+        }
+    }
+}
 void Game::processEvents()
 {
     sf::Event event;
@@ -137,11 +147,10 @@ void Game::update(float deltaTime)
             obiekt->alive = false;
         }
     }
-    for (auto it = assets.begin(); it != assets.end(); ++it) {
+
+    for (auto it = assets.begin(); it != assets.end(); it++) {
         if (!(*it)->alive) {
             it = assets.erase(it);
-            std::cout << "zniszczono obiekt" << std::endl;
-            std::cout << "Pozostalo obiektow"<<assets.size() << std::endl;
             if (it == assets.end()) {
                 break;
             }

@@ -10,7 +10,7 @@ public:
 
 protected:
     void handleCollision(sf::RenderWindow& window) override;
-    virtual void collide(Assety& col);
+    sf::FloatRect getBounds() const;
 };
 
 #endif // COIN_H

@@ -12,7 +12,6 @@ public:
 
     void update(float deltaTime);
     void draw(sf::RenderWindow& window);
-    virtual void collide(Assety& col) = 0;
     sf::Vector2f getPosition() const;
     void changevelocityx(float speedx);
     void changevelocityy(float speedy);
@@ -24,6 +23,7 @@ protected:
     sf::Vector2f m_position;
     sf::Vector2f m_velocity;
     double acceleration = -1.1;
+    virtual sf::FloatRect getBounds() const = 0;
     virtual void handleCollision(sf::RenderWindow& window) = 0;
 };
 

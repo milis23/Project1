@@ -15,19 +15,9 @@ Coin::Coin(float startX, float startY, float speedx, float speedy)
     m_velocity.y = speedy;
     // Dodatkowe konfiguracje sprite'a dla bomby
 }
-void Coin::collide(Assety& col) {
-    if (col.type == ObjectType::CHAMPION) {
-        std::cout << "KOLIZJA COIN CHAMPION" << std::endl;
-        this->alive = false;
-    }
-    if (col.type == ObjectType::BULLET) {
-        this->alive = false;
-        std::cout << "KOLIZJA COIN BULLET" << std::endl;
-    }
-    if (col.type == ObjectType::NET) {
-        this->alive = false;
-        std::cout << "KOLIZJA COIN BULLET" << std::endl;
-    }
+sf::FloatRect Coin::getBounds() const
+{
+    return this->getGlobalBounds();
 }
 void Coin::handleCollision(sf::RenderWindow& window)
 {

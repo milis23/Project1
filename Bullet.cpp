@@ -17,12 +17,21 @@ Bullet::Bullet(float startX, float startY, float speedx, float speedy, float deg
     m_velocity.y = speedy;
 }
 
+
 void Bullet::update(float deltaTime)
 {
     sf::Vector2f displacement = m_velocity * deltaTime;
     m_sprite.move(displacement);
-}
 
+}
+void Bullet::handleCollision(sf::RenderWindow& window)
+{
+
+}
+sf::FloatRect Bullet::getBounds() const
+{
+    return this->getGlobalBounds();
+}
 void Bullet::render(sf::RenderWindow& window)
 {
     window.draw(m_sprite);
@@ -34,29 +43,8 @@ bool Bullet::isOutOfBounds(const sf::RenderWindow& window) const
     return (bounds.left + bounds.width < 0.0f || bounds.left > window.getSize().x ||
             bounds.top + bounds.height < 0.0f || bounds.top > window.getSize().y);
 }
-void Bullet::collide(Assety& col) {
-    if (m_sprite.getGlobalBounds().intersects(col.getGlobalBounds())) {
-        if (col.type == ObjectType::BOMB) {
-            col.alive = false;
-            std::cout << "KOLIZJA BULLET BOMB" << std::endl;
-        }
-        if (col.type == ObjectType::COIN) {
-            col.alive = false;
-            std::cout << "KOLIZJA BULLET COIN" << std::endl;
-        }
-        if (col.type == ObjectType::SHIELD) {
-            col.alive = false;
-            std::cout << "KOLIZJA BULLET TARCZA" << std::endl;
-        }
-        if (col.type == ObjectType::AID) {
-            col.alive = false;
-            std::cout << "KOLIZJA BULLET APTECZKA" << std::endl;
-        }
-    }
-}
-void Bullet::handleCollision(sf::RenderWindow& window) {
 
-}
+
 sf::FloatRect Bullet::getGlobalBounds() const
 {
     return m_sprite.getGlobalBounds();

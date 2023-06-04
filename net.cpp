@@ -16,7 +16,10 @@ Net::Net(float startX, float startY, float speedx, float speedy, float degress) 
     m_velocity.y = speedy;
     ObjectType type = ObjectType::NET;
 }
-
+sf::FloatRect Net::getBounds() const
+{
+    return this->getGlobalBounds();
+}
 void Net::update(float deltaTime)
 {
     sf::Vector2f displacement = m_velocity * deltaTime;
@@ -34,9 +37,7 @@ bool Net::isOutOfBounds(const sf::RenderWindow& window) const
     return (bounds.left + bounds.width < 0.0f || bounds.left > window.getSize().x ||
         bounds.top + bounds.height < 0.0f || bounds.top > window.getSize().y);
 }
-void Net::collide(Assety& col) {
 
-}
 void Net::handleCollision(sf::RenderWindow& window) {
 
 }

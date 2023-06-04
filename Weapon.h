@@ -1,9 +1,9 @@
 #ifndef WEAPON_H
 #define WEAPON_H
-
+#include"Assety.h"
 #include <SFML/Graphics.hpp>
 
-class Weapon :public sf::Sprite
+class Weapon :public Assety
 {
 public:
     Weapon();
@@ -17,6 +17,7 @@ public:
     void handleInput(sf::Keyboard::Key key, bool isPressed);
     sf::Vector2f gettipPosition();
     void settipPosition(float x,float y);
+
 private:
     sf::Vector2f weapontipposition;
     sf::Texture m_texture;

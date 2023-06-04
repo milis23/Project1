@@ -15,11 +15,9 @@ Shield::Shield(float startX, float startY, float speedx, float speedy)
     m_velocity.y = speedy;
     // Dodatkowe konfiguracje sprite'a dla bomby
 }
-void Shield::collide(Assety& col) {
-    if (col.type == ObjectType::BULLET) {
-        this-> alive=false;
-        std::cout << "KOLIZJA TARCZA BULLET" << std::endl;
-    }
+sf::FloatRect Shield::getBounds() const
+{
+    return this->getGlobalBounds();
 }
 void Shield::handleCollision(sf::RenderWindow& window)
 {

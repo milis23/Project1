@@ -8,10 +8,11 @@ enum class ObjectType {
     AID,
     BULLET,
     NET,
-    CHAMPION
+    CHAMPION,
+    WEAPON
 };
 
-class Assety:public sf::Sprite
+class Assety : public sf::Sprite
 {
 public:
     bool alive = true; 

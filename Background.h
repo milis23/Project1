@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-class Background
+class Background : public sf::Sprite
 {
 public:
     Background();

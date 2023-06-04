@@ -42,6 +42,7 @@ private:
     void processEvents();
     void update(float deltaTime);
     void render();
+    void checkCollisions();
 };
 
 #endif // GAME_H

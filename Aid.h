@@ -9,8 +9,9 @@ public:
     Aid(float startX, float startY, float speedx, float speedy);
 
 protected:
-    virtual void collide(Assety& col);
+
     void handleCollision(sf::RenderWindow& window) override;
+    sf::FloatRect getBounds() const;
 };
 
 #endif // AID_H

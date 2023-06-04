@@ -13,13 +13,11 @@ Aid::Aid(float startX, float startY, float speedx,float speedy)
     m_velocity.x = speedx;
     m_velocity.y = speedy;
 }
-
-void Aid::collide(Assety& col) {
-    if (col.type == ObjectType::BULLET) {
-        this->alive = false;
-        std::cout << "KOLIZJA AID BULLET" << std::endl;
-    }
+sf::FloatRect Aid::getBounds() const
+{
+    return this->getGlobalBounds();
 }
+
 void Aid::handleCollision(sf::RenderWindow& window)
 {
     // Obs?uga kolizji dla pomocy
