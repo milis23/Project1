@@ -15,8 +15,11 @@ Bomb::Bomb(float startX, float startY, float speedx,float speedy)
     m_velocity.y = speedy;
     // Dodatkowe konfiguracje sprite'a dla bomby
 }
-void Bomb::collide(AnimowaneAssety& col) {
-
+void Bomb::collide(Assety& col) {
+    if (col.type == ObjectType::BULLET) {
+        this->alive = false;
+        std::cout << "KOLIZJA BOMB BULLET" << std::endl;
+    }
 }
 void Bomb::handleCollision(sf::RenderWindow& window)
 {

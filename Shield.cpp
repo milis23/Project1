@@ -15,14 +15,17 @@ Shield::Shield(float startX, float startY, float speedx, float speedy)
     m_velocity.y = speedy;
     // Dodatkowe konfiguracje sprite'a dla bomby
 }
-void Shield::collide(AnimowaneAssety& col) {
-
+void Shield::collide(Assety& col) {
+    if (col.type == ObjectType::BULLET) {
+        this-> alive=false;
+        std::cout << "KOLIZJA TARCZA BULLET" << std::endl;
+    }
 }
 void Shield::handleCollision(sf::RenderWindow& window)
 {
     // Obs?uga kolizji dla tarczy
     // Mo?esz doda? tu odpowiednie akcje w przypadku kolizji
     if (m_sprite.getPosition().y > 915) {
-        m_sprite.setPosition(m_sprite.getPosition().x, 915);
+        m_velocity.y = 0;
     }
 }

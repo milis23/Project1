@@ -2,8 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 #include "Weapon.h"
+#include"Assety.h"
 #include"AnimowaneAssety.h"
-class Champion :public sf::Sprite
+class Champion :public Assety
 {
 public:
     Champion();
@@ -17,14 +18,18 @@ public:
     void livesminus();
     void changetexture(const std::string& texturePath);
     int getlives();
+    int getpoints();
+    void collide(Assety& col);
 private:
     sf::Texture m_texture;
     sf::Sprite m_sprite;
     sf::Vector2f m_position;
+    sf::RenderWindow m_window;
     float m_movementSpeed;
     Weapon m_weapon;
-
+    int points = 0;
     int lives = 3;
+    bool immortal = false;
     bool m_isMovingLeft;
     bool m_isMovingRight;
 };

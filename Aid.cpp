@@ -14,14 +14,17 @@ Aid::Aid(float startX, float startY, float speedx,float speedy)
     m_velocity.y = speedy;
 }
 
-void Aid::collide(AnimowaneAssety& col) {
-
+void Aid::collide(Assety& col) {
+    if (col.type == ObjectType::BULLET) {
+        this->alive = false;
+        std::cout << "KOLIZJA AID BULLET" << std::endl;
+    }
 }
 void Aid::handleCollision(sf::RenderWindow& window)
 {
     // Obs?uga kolizji dla pomocy
     // Mo?esz doda? tu odpowiednie akcje w przypadku kolizji
     if (m_sprite.getPosition().y > 928) {
-        m_sprite.setPosition(m_sprite.getPosition().x, 928);
+        m_velocity.y = 0;
     }
 }

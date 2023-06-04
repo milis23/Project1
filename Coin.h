@@ -10,7 +10,7 @@ public:
 
 protected:
     void handleCollision(sf::RenderWindow& window) override;
-    virtual void collide(AnimowaneAssety& col);
+    virtual void collide(Assety& col);
 };
 
 #endif // COIN_H

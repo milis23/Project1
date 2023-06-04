@@ -29,6 +29,7 @@ void Weapon::draw(sf::RenderWindow& window)
 }
 Weapon::Weapon() : m_movementSpeed(200.0f), m_isMovingLeft(false), m_isMovingRight(false)
 {
+
 }
 
 void Weapon::setMovementSpeed(float speed)

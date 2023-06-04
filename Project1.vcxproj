@@ -160,20 +160,21 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="net.cpp" />
+    <ClCompile Include="Net.cpp" />
     <ClCompile Include="Shield.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Aid.h" />
     <ClInclude Include="AnimowaneAssety.h" />
+    <ClInclude Include="Assety.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Champion.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="net.h" />
+    <ClInclude Include="Net.h" />
     <ClInclude Include="Shield.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

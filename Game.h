@@ -13,18 +13,17 @@
 #include"Bullet.h"
 #include<Windows.h>
 #include<cmath>
-#include"net.h"
+#include"Net.h"
 class Game
 {
 public:
     Game();
-
+    ~Game();
     void run();
 
     int framecounter = 0;
 
 private:
-    bool isPaused = false;
     bool moved = false;
     sf::RenderWindow window;
     Background background;
@@ -36,8 +35,6 @@ private:
     sf::Vector2f mousePosition;
     sf::Vector2f normalizategunmouse;
     std::vector<AnimowaneAssety*> assets;
-    std::vector<Bullet*>bullets;
-    std::vector<Net*>nets;
     std::uniform_real_distribution<float> xPosDistribution;
     std::uniform_real_distribution<float> angleDistribution;
     std::uniform_real_distribution<float> speedDistribution;

@@ -15,14 +15,25 @@ Coin::Coin(float startX, float startY, float speedx, float speedy)
     m_velocity.y = speedy;
     // Dodatkowe konfiguracje sprite'a dla bomby
 }
-void Coin::collide(AnimowaneAssety& col) {
-
+void Coin::collide(Assety& col) {
+    if (col.type == ObjectType::CHAMPION) {
+        std::cout << "KOLIZJA COIN CHAMPION" << std::endl;
+        this->alive = false;
+    }
+    if (col.type == ObjectType::BULLET) {
+        this->alive = false;
+        std::cout << "KOLIZJA COIN BULLET" << std::endl;
+    }
+    if (col.type == ObjectType::NET) {
+        this->alive = false;
+        std::cout << "KOLIZJA COIN BULLET" << std::endl;
+    }
 }
 void Coin::handleCollision(sf::RenderWindow& window)
 {
     // Obs?uga kolizji dla monety
     // Mo?esz doda? tu odpowiednie akcje w przypadku kolizji
     if (m_sprite.getPosition().y > 915) {
-        m_sprite.setPosition(m_sprite.getPosition().x, 915);
+        m_velocity.y = 0;
     }
 }

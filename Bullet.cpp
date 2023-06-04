@@ -11,6 +11,7 @@ Bullet::Bullet(float startX, float startY, float speedx, float speedy, float deg
     m_sprite.setRotation(degress + 45);
     m_sprite.setPosition(m_position.x,m_position.y-0);
     std::cout << m_position.x << std::endl;
+    ObjectType type = ObjectType::BULLET;
     // Ustalanie prêdkoœci pocisku w zale¿noœci od kierunku
     m_velocity.x = speedx;
     m_velocity.y = speedy;
@@ -33,8 +34,25 @@ bool Bullet::isOutOfBounds(const sf::RenderWindow& window) const
     return (bounds.left + bounds.width < 0.0f || bounds.left > window.getSize().x ||
             bounds.top + bounds.height < 0.0f || bounds.top > window.getSize().y);
 }
-void Bullet::collide(AnimowaneAssety& col) {
-
+void Bullet::collide(Assety& col) {
+    if (m_sprite.getGlobalBounds().intersects(col.getGlobalBounds())) {
+        if (col.type == ObjectType::BOMB) {
+            col.alive = false;
+            std::cout << "KOLIZJA BULLET BOMB" << std::endl;
+        }
+        if (col.type == ObjectType::COIN) {
+            col.alive = false;
+            std::cout << "KOLIZJA BULLET COIN" << std::endl;
+        }
+        if (col.type == ObjectType::SHIELD) {
+            col.alive = false;
+            std::cout << "KOLIZJA BULLET TARCZA" << std::endl;
+        }
+        if (col.type == ObjectType::AID) {
+            col.alive = false;
+            std::cout << "KOLIZJA BULLET APTECZKA" << std::endl;
+        }
+    }
 }
 void Bullet::handleCollision(sf::RenderWindow& window) {
 

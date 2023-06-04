@@ -9,7 +9,7 @@ public:
     Bomb(float startX, float startY, float speedx, float speedy);
 
 protected:
-    virtual void collide(AnimowaneAssety& col);
+    virtual void collide(Assety& col);
     void handleCollision(sf::RenderWindow& window) override;
 };
 

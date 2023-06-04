@@ -2,6 +2,7 @@
 
 Champion::Champion() : m_movementSpeed(200.0f), m_isMovingLeft(false), m_isMovingRight(false)
 {
+    ObjectType type = ObjectType::CHAMPION;
 }
 
 void Champion::setPosition(float x, float y)
@@ -12,6 +13,26 @@ void Champion::setPosition(float x, float y)
     m_sprite.setScale(m_sprite.getScale().x * 3, m_sprite.getScale().y * 3);
     m_weapon.updatePosition(m_position);
 
+}
+void Champion::collide(Assety& col) {
+    if (m_sprite.getGlobalBounds().intersects(col.getGlobalBounds())) {
+        if (col.type == ObjectType::COIN) {
+            this->points += 10;
+            std::cout << "dodano punkty" << std::endl;
+        }
+        if ((col.type == ObjectType::BOMB)&&(immortal=false)) {
+            this->lives -= 1;
+        }
+        if ((col.type == ObjectType::BOMB )&&( immortal == true)) {
+            immortal = false;
+        }
+        if (col.type == ObjectType::SHIELD) {
+            immortal = true;
+        }
+        if (col.type == ObjectType::AID&&lives<3) {
+            this->lives += 1;
+        }
+    }
 }
 
 void Champion::setTexture(const std::string& texturePath)
@@ -93,4 +114,7 @@ void Champion::livesplus() {
 
 int Champion::getlives() {
     return lives;
+}
+int Champion::getpoints() {
+    return points;
 }

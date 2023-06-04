@@ -16,6 +16,13 @@ Game::Game() : window(sf::VideoMode(1920, 1080), "ShooterGame", sf::Style::Fulls
 
 }
 
+Game::~Game() {
+    for (AnimowaneAssety* wskaznik : assets) {
+        delete wskaznik;
+        std::cout << "usunieto wskaznik" << std::endl;
+    }
+}
+
 void Game::run()
 {
     sf::Clock clock;
@@ -26,6 +33,15 @@ void Game::run()
         processEvents();
         update(deltaTime.asSeconds());
         render();
+        if (champion.getpoints() >= 200) {
+            std::cout << "WYGRANA" << std::endl;
+            break;
+        }
+
+        if (champion.getlives() <= 0) {
+            std::cout << "PRZEGRANA" << std::endl;
+            break;
+        }
     }
 }
 
@@ -50,9 +66,13 @@ void Game::processEvents()
                 champion.handleInput(event.key.code, true);
                 weapon.handleInput(event.key.code, true);
             }
-            if ((event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D)&&(framecounter%16>7)&&(framecounter%16<16))
+            if ((event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D)&&(framecounter%16>12)&&(framecounter%16<16))
                 champion.changetexture("bieg1.png");
-            else if ((event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D) && (framecounter % 16 > 0)&&(framecounter%16<8))
+            else if ((event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D) && (framecounter % 16 > 8)&&(framecounter%16<12))
+                champion.changetexture("bieg2.png");
+            else if ((event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D) && (framecounter % 16 > 4) && (framecounter % 16 < 8))
+                champion.changetexture("bieg1.png");
+            else if ((event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D) && (framecounter % 16 > 0) && (framecounter % 16 < 4))
                 champion.changetexture("bieg2.png");
         }
         else if ((event.type == sf::Event::MouseButtonPressed && (event.mouseButton.button == sf::Mouse::Right || event.mouseButton.button == sf::Mouse::Left))&&moved==true)
@@ -66,7 +86,7 @@ void Game::processEvents()
                 float degrees = static_cast<float>(angle * 180 / 3.14159265358979323846);
                 newbullet = new Bullet(weapon.gettipPosition().x, weapon.gettipPosition().y, normalizategunmouse.x * 400, normalizategunmouse.y * 400,degrees);
 
-                bullets.emplace_back(newbullet);
+                assets.emplace_back(newbullet);
 
                 std::cout << "utworzono pocisk" << std::endl;
             }
@@ -76,7 +96,7 @@ void Game::processEvents()
                 float degrees = static_cast<float>(angle * 180 / 3.14159265358979323846);
                 newnet = new Net(weapon.gettipPosition().x, weapon.gettipPosition().y, normalizategunmouse.x * 400, normalizategunmouse.y * 400, degrees);
 
-                nets.emplace_back(newnet);
+                assets.emplace_back(newnet);
 
                 std::cout << "utworzono pocisk" << std::endl;
             }
@@ -89,8 +109,7 @@ void Game::processEvents()
                 weapon.handleInput(event.key.code, false);
                 champion.changetexture("champion1.png");
             }
-        }
-        
+        }  
     }
 }
 
@@ -113,13 +132,20 @@ void Game::update(float deltaTime)
 
 
     }
-    for (auto& obiekt : bullets)
-    {
-        obiekt->update(deltaTime);
+    for (AnimowaneAssety* obiekt : assets) {
+        if ((obiekt->getPosition().x > 1925) || (obiekt->getPosition().x < -5) || (obiekt->getPosition().y > 1925) || (obiekt->getPosition().y <-5)) {
+            obiekt->alive = false;
+        }
     }
-    for (auto& obiekt : nets)
-    {
-        obiekt->update(deltaTime);
+    for (auto it = assets.begin(); it != assets.end(); ++it) {
+        if (!(*it)->alive) {
+            it = assets.erase(it);
+            std::cout << "zniszczono obiekt" << std::endl;
+            std::cout << "Pozostalo obiektow"<<assets.size() << std::endl;
+            if (it == assets.end()) {
+                break;
+            }
+        }
     }
     // Aktualizacja obiektów
 }
@@ -137,16 +163,7 @@ void Game::render()
         obiekt->draw(window);
 
     }
-    for (auto& obiekt : bullets)
-    {
-        obiekt->draw(window);
 
-    }
-    for (auto& obiekt : nets)
-    {
-        obiekt->draw(window);
-
-    }
     window.display();
 
 }
@@ -180,7 +197,7 @@ void Game::spawnAsset()
             std::cout << "utworzono tarcze" << std::endl;
             break;
         case 10:
-            newAsset = new Aid(xPos, 0,0, yVelocity);
+            newAsset = new Coin(xPos, 0,0, yVelocity);
             std::cout << "utworzono apteczke" << std::endl;
             break;
         default:

@@ -1,11 +1,11 @@
-#include "net.h"
+#include "Net.h"
 #include<iostream>
 Net::Net(float startX, float startY, float speedx, float speedy, float degress) :AnimowaneAssety(startX, startY, speedx, speedy) {
     if (!m_texture.loadFromFile("net.png"))
     {
         // Obs³uga b³êdu ³adowania tekstury pocisku
     }
-    m_sprite.setScale(0.15, 0.15);
+    m_sprite.setScale(static_cast<float>(0.15),static_cast<float>( 0.15));
     m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2, m_sprite.getGlobalBounds().height / 2);
     m_sprite.setTexture(m_texture);
     m_sprite.setRotation(degress + 45);
@@ -14,6 +14,7 @@ Net::Net(float startX, float startY, float speedx, float speedy, float degress) 
     // Ustalanie prêdkoœci pocisku w zale¿noœci od kierunku
     m_velocity.x = speedx;
     m_velocity.y = speedy;
+    ObjectType type = ObjectType::NET;
 }
 
 void Net::update(float deltaTime)
@@ -33,7 +34,7 @@ bool Net::isOutOfBounds(const sf::RenderWindow& window) const
     return (bounds.left + bounds.width < 0.0f || bounds.left > window.getSize().x ||
         bounds.top + bounds.height < 0.0f || bounds.top > window.getSize().y);
 }
-void Net::collide(AnimowaneAssety& col) {
+void Net::collide(Assety& col) {
 
 }
 void Net::handleCollision(sf::RenderWindow& window) {

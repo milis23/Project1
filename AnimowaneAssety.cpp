@@ -25,6 +25,7 @@ void AnimowaneAssety::update(float deltaTime)
     
     // Sprawdzenie kolizji ze œcianami lub innymi obiektami
     handleCollision(m_window);
+
 }
 void AnimowaneAssety::changevelocityx(float speedx) {
     this->m_velocity.x = speedx;

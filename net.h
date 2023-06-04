@@ -14,7 +14,7 @@ public:
     bool isOutOfBounds(const sf::RenderWindow& window) const;
     sf::FloatRect getGlobalBounds() const;
 protected:
-    virtual void collide(AnimowaneAssety& col);
+    virtual void collide(Assety& col);
     void handleCollision(sf::RenderWindow& window) override;
 
 private:
