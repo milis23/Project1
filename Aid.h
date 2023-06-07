@@ -11,7 +11,7 @@ public:
 protected:
 
     void handleCollision(sf::RenderWindow& window) override;
-    sf::FloatRect getBounds() const;
+
 };
 
 #endif // AID_H

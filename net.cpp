@@ -5,10 +5,9 @@ Net::Net(float startX, float startY, float speedx, float speedy, float degress) 
     {
         // Obs³uga b³êdu ³adowania tekstury pocisku
     }
-    m_sprite.setScale(static_cast<float>(0.15),static_cast<float>( 0.15));
     m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2, m_sprite.getGlobalBounds().height / 2);
     m_sprite.setTexture(m_texture);
-    m_sprite.setRotation(degress + 45);
+    m_sprite.setRotation(degress);
     m_sprite.setPosition(m_position.x, m_position.y - 0);
     std::cout << m_position.x << std::endl;
     // Ustalanie prêdkoœci pocisku w zale¿noœci od kierunku
@@ -16,10 +15,7 @@ Net::Net(float startX, float startY, float speedx, float speedy, float degress) 
     m_velocity.y = speedy;
     ObjectType type = ObjectType::NET;
 }
-sf::FloatRect Net::getBounds() const
-{
-    return this->getGlobalBounds();
-}
+
 void Net::update(float deltaTime)
 {
     sf::Vector2f displacement = m_velocity * deltaTime;

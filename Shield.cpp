@@ -15,10 +15,6 @@ Shield::Shield(float startX, float startY, float speedx, float speedy)
     m_velocity.y = speedy;
     // Dodatkowe konfiguracje sprite'a dla bomby
 }
-sf::FloatRect Shield::getBounds() const
-{
-    return this->getGlobalBounds();
-}
 void Shield::handleCollision(sf::RenderWindow& window)
 {
     // Obs?uga kolizji dla tarczy

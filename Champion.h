@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "Weapon.h"
-#include"Assety.h"
 #include"AnimowaneAssety.h"
 class Champion :public Assety
 {

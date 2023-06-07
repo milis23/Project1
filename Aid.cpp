@@ -13,10 +13,7 @@ Aid::Aid(float startX, float startY, float speedx,float speedy)
     m_velocity.x = speedx;
     m_velocity.y = speedy;
 }
-sf::FloatRect Aid::getBounds() const
-{
-    return this->getGlobalBounds();
-}
+
 
 void Aid::handleCollision(sf::RenderWindow& window)
 {

@@ -15,7 +15,10 @@ AnimowaneAssety::AnimowaneAssety(float startX, float startY, float speedx,float 
     m_velocity.x = speedx;
     m_velocity.y = speedy;
 }
-
+sf::FloatRect AnimowaneAssety::getGlobalBounds()
+{
+    return sf::FloatRect(m_position.x, m_position.y, m_sprite.getTextureRect().width, m_sprite.getTextureRect().height);
+}
 void AnimowaneAssety::update(float deltaTime)
 {
     // Aktualizacja pozycji na podstawie prêdkoœci

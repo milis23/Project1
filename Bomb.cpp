@@ -15,10 +15,7 @@ Bomb::Bomb(float startX, float startY, float speedx,float speedy)
     m_velocity.y = speedy;
     // Dodatkowe konfiguracje sprite'a dla bomby
 }
-sf::FloatRect Bomb::getBounds() const
-{
-    return this->getGlobalBounds();
-}
+
 void Bomb::handleCollision(sf::RenderWindow& window)
 {
     // Obs?uga kolizji dla bomby

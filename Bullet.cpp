@@ -5,10 +5,9 @@ Bullet::Bullet(float startX, float startY, float speedx, float speedy, float deg
     {
         // Obs³uga b³êdu ³adowania tekstury pocisku
     }
-    m_sprite.setScale(0.08, 0.08);
     m_sprite.setOrigin(m_sprite.getGlobalBounds().width/2, m_sprite.getGlobalBounds().height/2);
     m_sprite.setTexture(m_texture);
-    m_sprite.setRotation(degress + 45);
+    m_sprite.setRotation(degress);
     m_sprite.setPosition(m_position.x,m_position.y-0);
     std::cout << m_position.x << std::endl;
     ObjectType type = ObjectType::BULLET;
@@ -28,10 +27,7 @@ void Bullet::handleCollision(sf::RenderWindow& window)
 {
 
 }
-sf::FloatRect Bullet::getBounds() const
-{
-    return this->getGlobalBounds();
-}
+
 void Bullet::render(sf::RenderWindow& window)
 {
     window.draw(m_sprite);

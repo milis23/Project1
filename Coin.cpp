@@ -15,10 +15,6 @@ Coin::Coin(float startX, float startY, float speedx, float speedy)
     m_velocity.y = speedy;
     // Dodatkowe konfiguracje sprite'a dla bomby
 }
-sf::FloatRect Coin::getBounds() const
-{
-    return this->getGlobalBounds();
-}
 void Coin::handleCollision(sf::RenderWindow& window)
 {
     // Obs?uga kolizji dla monety

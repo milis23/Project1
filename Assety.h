@@ -1,6 +1,5 @@
 #pragma once
 #include<SFML/Graphics.hpp>
-#include<iostream>
 enum class ObjectType {
     BOMB = 0,
     SHIELD,
@@ -11,11 +10,10 @@ enum class ObjectType {
     CHAMPION,
     WEAPON
 };
-
-class Assety : public sf::Sprite
+class Assety:public sf::Sprite
 {
 public:
-    bool alive = true; 
     ObjectType type;
+    bool alive = true;
 };
 

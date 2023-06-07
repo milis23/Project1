@@ -35,14 +35,13 @@ private:
     sf::Vector2f mousePosition;
     sf::Vector2f normalizategunmouse;
     std::vector<AnimowaneAssety*> assets;
-    std::uniform_real_distribution<float> xPosDistribution;
-    std::uniform_real_distribution<float> angleDistribution;
-    std::uniform_real_distribution<float> speedDistribution;
+    std::vector<AnimowaneAssety*> bullets;
     void spawnAsset();
     void processEvents();
     void update(float deltaTime);
     void render();
     void checkCollisions();
+    void setAlive(bool ali);
 };
 
 #endif // GAME_H

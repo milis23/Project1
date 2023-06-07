@@ -9,7 +9,7 @@ public:
     Bomb(float startX, float startY, float speedx, float speedy);
 
 protected:
-    sf::FloatRect getBounds() const;
+
     void handleCollision(sf::RenderWindow& window) override;
 };
 
