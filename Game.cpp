@@ -60,23 +60,28 @@ void Game::run()
 void Game::checkCollisions()
 {//sprawdzanie kolizji
     for (AnimowaneAssety* asset:assets) {
+        Bomb* bomb = dynamic_cast<Bomb*>(asset);
+        Coin* coin = dynamic_cast<Coin*>(asset);
+        Shield* shield = dynamic_cast<Shield*>(asset);
+        Aid* aid = dynamic_cast<Aid*>(asset);
         for (AnimowaneAssety* bullet:bullets) {
+            Bullet* bull = dynamic_cast<Bullet*>(bullet);
+            Net* net = dynamic_cast<Net*>(bullet);
                 if (asset->getGlobalBounds().intersects(bullet->getGlobalBounds())) {//wykrywanie kolizji bulletów z assetami
                     //zmienna alive po zderzeniu zmieniana jest na false
                     bullet->alive = false;
-                    asset->alive = false;
                     //dynamic casty aby sprawdziæ z jakim obiektem mamy doczynienia
-                    Bullet* bull = dynamic_cast<Bullet*>(bullet);
-                    Bomb* bomb = dynamic_cast<Bomb*>(asset);
-                    Coin* coin = dynamic_cast<Coin*>(asset);
-                    Shield* shield = dynamic_cast<Shield*>(asset);
-                    Aid* aid = dynamic_cast<Aid*>(asset);
+                    
+                    
+                    
                     if (bull != nullptr) {//jeœli obiek z bullets jest bulletem 
+                        asset->alive = false;
                         if (coin != nullptr) {//jeœli obiekt z assetów jest coinem
                             champion.pointsminus();//zniszczenie monety skutkuje zabraniem 20 punktów
                         }
                     }
-                    else {////jeœli obiek z bullets jest netem
+                    else if(net!=nullptr){
+                        asset->alive = false;
                         if (bomb != nullptr && champion.getimmortal() == false) {//jeœli obiekt z assetów jest bomb¹ i nie mamy nieœmiertelnoœci
                             champion.livesminus();//zabieramy ¿ycie
                         }
@@ -94,33 +99,12 @@ void Game::checkCollisions()
                         }
                     }
                 }
-            
+        }
+        if (champion.getGlobalBounds().intersects(asset->getGlobalBounds())) {
+            std::cout << "dupa" << std::endl;
+
         }
     }
-    //for (AnimowaneAssety* asset : assets) {
-    //    if (champion.getGlobalBounds().intersects(asset->getGlobalBounds())) {
-    //        asset->alive = false;
-    //        Bomb* bomb = dynamic_cast<Bomb*>(asset);
-    //        Coin* coin = dynamic_cast<Coin*>(asset);
-    //        Shield* shield = dynamic_cast<Shield*>(asset);
-    //        Aid* aid = dynamic_cast<Aid*>(asset);
-    //        if (bomb != nullptr && champion.getimmortal() == false) {//jeœli obiekt z assetów jest bomb¹ i nie mamy nieœmiertelnoœci
-    //            champion.livesminus();//zabieramy ¿ycie
-    //        }
-    //        else if (bomb != nullptr && champion.getimmortal() == true) {//jeœli obiekt z assetów jest bomb¹ ale mamy nieœmiertelnoœæ
-    //            champion.setimmortal(false);//wy³¹czamy nieœmiertelnoœæ
-    //        }
-    //        else if (coin != nullptr) {//jeœli obiekt z assetów jest coinem
-    //            champion.pointsplus();//dodajemy 20 punktów
-    //        }
-    //        else if (shield != nullptr) {//jeœli obiekt z assetów jest tarcz¹
-    //            champion.setimmortal(true);//nieœmiertelnoœæ jest w³¹czona
-    //        }
-    //        else if (aid != nullptr) {//jeœli obiekt z assetów jest apteczk¹
-    //            champion.livesplus();//+1 zycie
-    //        }
-    //    }
-    //}
 }
 
 void Game::processEvents()
