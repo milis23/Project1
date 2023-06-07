@@ -13,7 +13,7 @@ Net::Net(float startX, float startY, float speedx, float speedy, float degress) 
     // Ustalanie prêdkoœci pocisku w zale¿noœci od kierunku
     m_velocity.x = speedx;
     m_velocity.y = speedy;
-    ObjectType type = ObjectType::NET;
+
 }
 
 void Net::update(float deltaTime)

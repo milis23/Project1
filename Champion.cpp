@@ -2,7 +2,6 @@
 
 Champion::Champion() : m_movementSpeed(200.0f), m_isMovingLeft(false), m_isMovingRight(false)
 {
-    ObjectType type = ObjectType::CHAMPION;
 }
 
 void Champion::setPosition(float x, float y)
@@ -13,8 +12,6 @@ void Champion::setPosition(float x, float y)
     m_sprite.setScale(m_sprite.getScale().x * 3, m_sprite.getScale().y * 3);
     m_weapon.updatePosition(m_position);
 
-}
-void Champion::collide(Assety& col) {
 }
 
 void Champion::setTexture(const std::string& texturePath)
@@ -85,7 +82,12 @@ void Champion::handleInput(sf::Keyboard::Key key, bool isPressed)
         m_weapon.setScale(2.5f, 2.5f);
     }
 }
-
+void Champion::setimmortal(bool immo) {
+    this->immortal = immo;
+}
+bool Champion::getimmortal() {
+    return immortal;
+}
 void Champion::livesminus() {
     lives -= 1;
 }
@@ -96,6 +98,14 @@ void Champion::livesplus() {
 
 int Champion::getlives() {
     return lives;
+}
+void Champion::pointsminus() {
+    points+=10;
+    std::cout << points << std::endl;
+}
+void Champion::pointsplus() {
+    points+=10;
+    std::cout << points << std::endl;
 }
 int Champion::getpoints() {
     return points;

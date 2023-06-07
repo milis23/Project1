@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <random>
 #include"Assety.h"
-class AnimowaneAssety: public Assety
+class AnimowaneAssety: public sf::Sprite
 {
 public:
     AnimowaneAssety(float startX, float startY, float speedx,float speedy);
@@ -16,8 +16,8 @@ public:
     void changevelocityx(float speedx);
     void changevelocityy(float speedy);
     sf::FloatRect getGlobalBounds();
+    bool alive = true;
 protected:
-    
     sf::RenderWindow m_window;
     sf::Sprite m_sprite;
     sf::Texture m_texture;

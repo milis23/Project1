@@ -10,7 +10,6 @@ void Weapon::setTexture(const std::string& texturePath)
     weapontipposition.y = m_sprite.getPosition().y + m_sprite.getGlobalBounds().height / 2;
     m_sprite.setTexture(m_texture);
     m_sprite.setScale(2.5, 2.5);
-    ObjectType type = ObjectType::WEAPON;
     
 }
 

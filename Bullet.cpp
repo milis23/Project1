@@ -10,7 +10,6 @@ Bullet::Bullet(float startX, float startY, float speedx, float speedy, float deg
     m_sprite.setRotation(degress);
     m_sprite.setPosition(m_position.x,m_position.y-0);
     std::cout << m_position.x << std::endl;
-    ObjectType type = ObjectType::BULLET;
     // Ustalanie prêdkoœci pocisku w zale¿noœci od kierunku
     m_velocity.x = speedx;
     m_velocity.y = speedy;

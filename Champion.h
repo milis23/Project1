@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Weapon.h"
 #include"AnimowaneAssety.h"
-class Champion :public Assety
+class Champion :public sf::Sprite
 {
 public:
     Champion();
@@ -18,7 +18,10 @@ public:
     void changetexture(const std::string& texturePath);
     int getlives();
     int getpoints();
-    void collide(Assety& col);
+    void setimmortal(bool immo);
+    bool getimmortal();
+    void pointsplus();
+    void pointsminus();
 private:
     sf::Texture m_texture;
     sf::Sprite m_sprite;

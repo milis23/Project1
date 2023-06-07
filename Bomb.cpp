@@ -8,7 +8,6 @@ Bomb::Bomb(float startX, float startY, float speedx,float speedy)
     {
         // Obs?uga b??du ?adowania tekstury dla bomby
     }
-    ObjectType type = ObjectType::BOMB;
     m_sprite.setPosition(startX, startY-m_sprite.getGlobalBounds().width);
     m_sprite.setTexture(m_texture);
     m_velocity.x = speedx;
