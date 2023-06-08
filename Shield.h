@@ -9,6 +9,7 @@ public:
     Shield(float startX, float startY, float speedx, float speedy);
 
 protected:
+    //wykrycie zderzenia z podlog¹
     void handleCollision(sf::RenderWindow& window) override;
 
 };

@@ -2,7 +2,7 @@
 
 Game::Game() : window(sf::VideoMode(1920, 1080), "ShooterGame", sf::Style::Fullscreen)
 {
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(60);//ustawienie liczby klatek
     //wczytywanie tekstury t³a
     if (!background.loadTexture("background.png"))
     {
@@ -12,16 +12,24 @@ Game::Game() : window(sf::VideoMode(1920, 1080), "ShooterGame", sf::Style::Fulls
     {
         // Obs³uga b³êdu ³adowania czcionki
     }
-    text.setFont(font);
-    text2.setFont(font);
+    //dodanie tekstów do vectora
+    texts.emplace_back(&text);
+    texts.emplace_back(&text2);
+    texts.emplace_back(&text3);
+    //ustawiwnie czcioki
+    for (sf::Text* te : texts) {
+        te->setFont(font);
+    }
+    //dodanie 3 zyc do vektora
+    for (int i = 0; i < 3; i++) {
+        Hearts* heart = new Hearts(static_cast<float>(1920 - 60 - i * 60), 0);
+        hearts.emplace_back(heart);
+    }
     //ustawianie bazowej tekstury dla bohatera
     champion.setTexture("champion1.png");
     //ustalanieskali bohatera
     champion.setScale(champion.getScale().x/30,champion.getScale().y/30);
     //wczytywanie tekstury broni
-    sf::Vector2f scale;
-    scale.x = 2.5;
-    scale.y = 2.5;
     weapon.setTexture("weapon.png");
     //ustawianie bohatera
     champion.setPosition(static_cast<float>(window.getSize().x/2),static_cast<float>(930));
@@ -33,25 +41,25 @@ Game::~Game() {
     //usuwanie wskaŸnikow przy zakoñczeniu gry
     for (AnimowaneAssety* wskaznik : assets) {
         delete wskaznik;
-        std::cout << "usunieto wskaznik" << std::endl;
     }
     for (AnimowaneAssety* wskaznik : bullets) {
         delete wskaznik;
-        std::cout << "usunieto wskaznik" << std::endl;
+    }
+    for (Hearts* wskaznik : hearts) {
+        delete wskaznik;
     }
 }
-
 void Game::run()
 {
-    sf::Clock clock;
+    sf::Clock clock;//zmienna do obmierzania czasu
     //pêtla gry
     while (window.isOpen())
     {
         //odmierzanie czasu pomiêdzy pêtlami 
-        sf::Time deltaTime = clock.restart();
-        processEvents();
-        update(deltaTime.asSeconds());
-        render();
+        sf::Time deltaTime = clock.restart();//mierzenie czasu pomiedzy pêtlami
+        processEvents();//wykrywanie eventow
+        update(deltaTime.asSeconds());//aktualizacja obiektow wzgledem czasu
+        render();//wyswietlanie obiektow
         //warunki zakoñczenia gry
         if (champion.getpoints() >= 200) {
             std::cout << "WYGRANA" << std::endl;
@@ -67,8 +75,10 @@ void Game::run()
 }
 void Game::checkCollisions()
 {//sprawdzanie kolizji
+    //rzutowanie za pomoca dynamic cast aby sprawdzac z jakim typem obiektu mamy doczynienia , jesli zrzutujemy obiekt ktory nie jest typem na ktory rzutujemy otrzymamy pusty wskaznik 
     Champion* champ = &champion;
     Champion* cham = dynamic_cast<Champion*>(champ);
+    //sprawdzanie kolizji assetow z bohaterem
     for (AnimowaneAssety* asset : assets) {
         Bomb* bomb = dynamic_cast<Bomb*>(asset);
         Coin* coin = dynamic_cast<Coin*>(asset);
@@ -83,7 +93,7 @@ void Game::checkCollisions()
                 champion.setimmortal(false);//wy³¹czamy nieœmiertelnoœæ
             }
             else if (coin != nullptr) {//jeœli obiekt z assetów jest coinem
-                champion.pointsplus();//dodajemy 20 punktów
+                champion.pointsplus();//dodajemy 10 punktów
             }
             else if (shield != nullptr) {//jeœli obiekt z assetów jest tarcz¹
                 champion.setimmortal(true);//nieœmiertelnoœæ jest w³¹czona
@@ -93,6 +103,7 @@ void Game::checkCollisions()
             }
         }
     }
+    //sprawdzabnie kolizji assetow z pociskami
     for (AnimowaneAssety* asset:assets) {
         Bomb* bomb = dynamic_cast<Bomb*>(asset);
         Coin* coin = dynamic_cast<Coin*>(asset);
@@ -108,7 +119,7 @@ void Game::checkCollisions()
                     if (bull != nullptr) {//jeœli obiek z bullets jest bulletem 
                         asset->alive = false;
                         if (coin != nullptr) {//jeœli obiekt z assetów jest coinem
-                            champion.pointsminus();//zniszczenie monety skutkuje zabraniem 20 punktów
+                            champion.pointsminus();//zniszczenie monety skutkuje zabraniem 10 punktów
                         }
                     }
                     else if(net!=nullptr){
@@ -120,7 +131,7 @@ void Game::checkCollisions()
                             champion.setimmortal(false);//wy³¹czamy nieœmiertelnoœæ
                         }
                         else if (coin != nullptr) {//jeœli obiekt z assetów jest coinem
-                            champion.pointsplus();//dodajemy 20 punktów
+                            champion.pointsplus();//dodajemy 10 punktów
                         }
                         else if (shield != nullptr) {//jeœli obiekt z assetów jest tarcz¹
                             champion.setimmortal(true);//nieœmiertelnoœæ jest w³¹czona
@@ -130,7 +141,7 @@ void Game::checkCollisions()
                         }
                     }
                 }
-                
+        //wskaŸniki s¹ usuwane przy zakoñczeniu funkcji       
         }
     }
 }
@@ -145,7 +156,7 @@ void Game::processEvents()
             window.close();
         }
         else if (event.type == sf::Event::KeyPressed)
-        {
+        {   //wy³¹czanie za pomoc¹ escape
             if (event.key.code == sf::Keyboard::Escape)
             {
                 window.close();
@@ -184,16 +195,21 @@ void Game::processEvents()
                 float degrees = static_cast<float>(angle * 180 / 3.14159265358979323846);
                 //tworzenie pocisku
                 newbullet = new Bullet(weapon.gettipPosition().x, weapon.gettipPosition().y, normalizategunmouse.x * 400, normalizategunmouse.y * 400,degrees);
+                //dodanie do vectora
                 bullets.emplace_back(newbullet);
+                //zmiana tekstury broni aby byla zgodna z rodzajem wystrzelonego pocisku
                 weapon.setTexture("weapon.png");
             }
             if (event.mouseButton.button == sf::Mouse::Right) {
                 //tworzenie pocisku typu net
                 Net* newnet = nullptr;
+                //analogicznie dla pocisków typu net
                 float angle = std::atan2(normalizategunmouse.y, normalizategunmouse.x);
                 float degrees = static_cast<float>(angle * 180 / 3.14159265358979323846);
                 newnet = new Net(weapon.gettipPosition().x, weapon.gettipPosition().y, normalizategunmouse.x * 400, normalizategunmouse.y * 400, degrees);
+                //dodawanie do vectora
                 bullets.emplace_back(newnet);
+                //zmiana tekstury broni aby byla zgodna z rodzajem wystrzelonego pocisku
                 weapon.setTexture("weapon2.png");
             }
         }
@@ -209,16 +225,30 @@ void Game::processEvents()
         }  
     }
 }
-
+void Game::setfonts() {
+    //konfiguracja textów do wyœwietlenia na ekran
+    std::string str = std::to_string(champion.getpoints());
+    texts[0]->setString("SCORE:" + str);
+    texts[1]->setString("ABY ROZPOCZAC GRE WCISNIJ A LUB D");
+    texts[0]->setFillColor(sf::Color::Black);
+    texts[1]->setOrigin(text2.getGlobalBounds().width / 2, texts[1]->getGlobalBounds().height / 2);
+    texts[1]->setFillColor(sf::Color::Black);
+    texts[1]->setPosition(static_cast<float>(window.getSize().x / 2), static_cast<float>(150));
+    std::string immo;
+    if (champion.getimmortal()) {
+        immo = "ACTIVATED";
+    }
+    else {
+        immo = "INACTIVE";
+    }
+    texts[2]->setFillColor(sf::Color::Black);
+    texts[2]->setString("SHIELD: " + immo);
+    texts[2]->setPosition(1300, 0);
+}
 void Game::update(float deltaTime)
 {
-    std::string str = std::to_string(champion.getpoints());
-    text.setString("SCORE:"+str);
-    text2.setString("ABY ROZPOCZAC GRE WCISNIJ A LUB D");
-    text.setFillColor(sf::Color::Black);
-    text2.setOrigin(text2.getGlobalBounds().width / 2, text2.getGlobalBounds().height / 2);
-    text2.setFillColor(sf::Color::Black);
-    text2.setPosition(window.getSize().x/2,150);
+    setfonts();//nie zostal przeniesiony do konstruktora poniewaz text2 przyjmuje rozne wartosci i musza byc one aktualizowane na bierz¹co ,
+    //mozna przeniesc reszte textow do konstuktora jednak chcialem aby byly one w jednym miejscu 
     //poruszanie sie championa i broni
     champion.update(deltaTime);
     weapon.update(deltaTime);
@@ -297,6 +327,28 @@ void Game::render()
     if (!moved) {
         window.draw(text2);
     }
+    window.draw(text3);
+    if (champion.getlives()==3) {
+        for (auto& serce : hearts) {
+            serce->draw(window);
+        }
+    }
+    if (champion.getlives() == 2) {
+        int counter = 0;
+        for (auto& serce : hearts) {
+            serce->draw(window);
+            counter++;
+            if (counter == 2)
+                break;
+        }
+    }
+    if (champion.getlives() == 1) {
+        for (auto& serce : hearts) {
+            serce->draw(window);
+            break;
+        }
+    }
+
     window.display();
 }
 
@@ -304,14 +356,13 @@ void Game::spawnAsset()
 {
     // Wygeneruj losow¹ pozycjê x na górze ekranu
     float xPos = static_cast<float>(10+rand() % window.getSize().x-20);
-
     // Wygeneruj losow¹ prêdkoœæ x i y
     float xVelocity = static_cast<float>(rand() % 201 - 100);
     float yVelocity = static_cast<float>(rand() % 200 + 100);
     int assetType = rand() % 11;
     AnimowaneAssety* newAsset = nullptr;//pusty wskaŸnik
     //moved to dodatkowy warunek dziêki któremu obiekty zaczn¹ sie pojawiaæ dopiero po poruszeniu gracz w prawo lub lewo
-    //tworzenie obiektów w zale¿noœci od wylosowanej liczby, bomba 0-7 moneta-8,tarcza-9 i apteczka-10 
+    //tworzenie obiektów w zale¿noœci od wylosowanej liczby, bomba 0-7 moneta-8,tarcza-9 i apteczka-10
     if (assetType < 8&&moved==true) {
         newAsset = new Bomb(xPos, 0, xVelocity,yVelocity);
         std::cout << "utworzono bombe" << std::endl;

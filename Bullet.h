@@ -7,13 +7,10 @@ class Bullet :public AnimowaneAssety
 {
 public:
     Bullet(float startX, float startY, float speedx, float speedy,float degres);
-    void update(float deltaTime);
-    void render(sf::RenderWindow& window);
-
-    bool isOutOfBounds(const sf::RenderWindow& window) const;
-    sf::FloatRect getGlobalBounds() const;
+    void update(float deltaTime);//aktualizacja pozycji wzgledem czasu
+    sf::FloatRect getGlobalBounds() const;//zwraca globalBounds obiektu
 protected:
-    void handleCollision(sf::RenderWindow& window) override;
+    void handleCollision(sf::RenderWindow& window) override;//przedefiniowanie metody abstrakcyjnej
 
 private:
 };

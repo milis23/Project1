@@ -2,41 +2,41 @@
 
 Champion::Champion() : m_movementSpeed(200.0f), m_isMovingLeft(false), m_isMovingRight(false)
 {
+    //ustawia predkosc i zmienne moving left i right na false poniewaz jeszcze sie nie poruszylismy 
 }
 
 void Champion::setPosition(float x, float y)
 {
+    //wczytanie zmiennych do pozycji bohatera
     m_position.x = x;
     m_position.y = y;
-    m_sprite.setPosition(m_position);
-    m_sprite.setScale(m_sprite.getScale().x * 3, m_sprite.getScale().y * 3);
-    m_weapon.updatePosition(m_position);
+    m_sprite.setPosition(m_position);//ustawienie pozycji bohatera
+    m_sprite.setScale(m_sprite.getScale().x * 3, m_sprite.getScale().y * 3);//powiekszenie bohatera
+    m_weapon.updatePosition(m_position);//zmiana pozycji broni
 
 }
 bool Champion::getmovingleft() {
     return m_isMovingLeft;
-}
+}//zwraca zmienn¹ bool 
 void Champion::setTexture(const std::string& texturePath)
 {
     if (!m_texture.loadFromFile(texturePath))
     {
         // Obs³uga b³êdu ³adowania tekstury bohatera
     }
-
+    //ustawia teksture
     m_sprite.setTexture(m_texture);
-
     // Ustawienie pochodzenia na œrodek tekstury
-    sf::FloatRect bounds = m_sprite.getLocalBounds();
-    m_sprite.setOrigin(bounds.left + bounds.width / 2, bounds.top + bounds.height / 2);
+    m_sprite.setOrigin(m_sprite.getLocalBounds().left + m_sprite.getLocalBounds().width / 2, m_sprite.getLocalBounds().top + m_sprite.getLocalBounds().height / 2);
 }
 void Champion::setMovementSpeed(float speed)
-{
+{//zmiana predkosci
     m_movementSpeed = speed;
 }
 
 void Champion::update(float deltaTime)
 {
-    // Poruszanie siê bohatera w zale¿noœci od wciœniêtych klawiszy
+    // zmiana pozycji bohatera w zale¿noœci od kierunku
     if (m_isMovingLeft)
     {
         m_position.x -= m_movementSpeed * deltaTime;
@@ -52,7 +52,7 @@ void Champion::update(float deltaTime)
     m_weapon.updatePosition(m_position);
 }
 sf::FloatRect Champion::getGlobalBounds() const
-{
+{//zwraca GlobalBounds obiektu
     sf::FloatRect bounds = m_sprite.getGlobalBounds();
     bounds.left += getPosition().x;
     bounds.top += getPosition().y;
@@ -63,7 +63,7 @@ void Champion::changetexture(const std::string& texturePath) {
     {
         // Obs³uga b³êdu ³adowania tekstury bohatera
     }
-
+    //zmiana tekstury
     m_sprite.setTexture(m_texture);
 
     

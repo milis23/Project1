@@ -7,15 +7,12 @@ class Net :public AnimowaneAssety
 {
 public:
     Net(float startX, float startY, float speedx, float speedy, float degres);
-
+    //aktualizajca pozycji wzgledem czasu
     void update(float deltaTime);
-    void render(sf::RenderWindow& window);
-
-    bool isOutOfBounds(const sf::RenderWindow& window) const;
+    //zwraca GlobalBounds obiektu
     sf::FloatRect getGlobalBounds() const;
 protected:
-
-    void handleCollision(sf::RenderWindow& window) override;
+    void handleCollision(sf::RenderWindow& window) override;//przedefiniowanie metody abstrakcyjnej
 
 private:
 };

@@ -6,11 +6,9 @@
 class Aid : public AnimowaneAssety
 {
 public:
-    Aid(float startX, float startY, float speedx, float speedy);
-
+    Aid(float startX, float startY, float speedx, float speedy);//konstruktor apteczki
 protected:
-
-    void handleCollision(sf::RenderWindow& window) override;
+    void handleCollision(sf::RenderWindow& window) override;//wyzerowanie predkosci przy zderzeniu z podlog¹
 
 };
 

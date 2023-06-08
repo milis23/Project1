@@ -16,8 +16,7 @@ Aid::Aid(float startX, float startY, float speedx,float speedy)
 
 void Aid::handleCollision(sf::RenderWindow& window)
 {
-    // Obs?uga kolizji dla pomocy
-    // Mo?esz doda? tu odpowiednie akcje w przypadku kolizji
+    //wyzerowanie predkosci przy zderzeniu z podlog¹
     if (m_sprite.getPosition().y > 928) {
         m_velocity.y = 0;
     }
