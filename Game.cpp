@@ -8,19 +8,27 @@ Game::Game() : window(sf::VideoMode(1920, 1080), "ShooterGame", sf::Style::Fulls
     {
         // Obs³uga b³êdu ³adowania tekstury t³a
     }
+    if (!font.loadFromFile("Arial.ttf"))
+    {
+        // Obs³uga b³êdu ³adowania czcionki
+    }
+    text.setFont(font);
+    text2.setFont(font);
     //ustawianie bazowej tekstury dla bohatera
     champion.setTexture("champion1.png");
     //ustalanieskali bohatera
     champion.setScale(champion.getScale().x/30,champion.getScale().y/30);
     //wczytywanie tekstury broni
+    sf::Vector2f scale;
+    scale.x = 2.5;
+    scale.y = 2.5;
     weapon.setTexture("weapon.png");
     //ustawianie bohatera
-    champion.setPosition(static_cast<float>(window.getSize().x/2),static_cast<float>(905));
+    champion.setPosition(static_cast<float>(window.getSize().x/2),static_cast<float>(930));
     champion.setMovementSpeed(200.0f);
     //ustawianie broni
     weapon.setPosition(static_cast<float>(window.getSize().x / 2),static_cast<float>(905));
 }
-
 Game::~Game() {
     //usuwanie wskaŸnikow przy zakoñczeniu gry
     for (AnimowaneAssety* wskaznik : assets) {
@@ -59,6 +67,32 @@ void Game::run()
 }
 void Game::checkCollisions()
 {//sprawdzanie kolizji
+    Champion* champ = &champion;
+    Champion* cham = dynamic_cast<Champion*>(champ);
+    for (AnimowaneAssety* asset : assets) {
+        Bomb* bomb = dynamic_cast<Bomb*>(asset);
+        Coin* coin = dynamic_cast<Coin*>(asset);
+        Shield* shield = dynamic_cast<Shield*>(asset);
+        Aid* aid = dynamic_cast<Aid*>(asset);
+        if (champ->getGlobalBounds().intersects(asset->getGlobalBounds())) {
+            asset->alive = false;
+            if (bomb != nullptr && champion.getimmortal() == false) {//jeœli obiekt z assetów jest bomb¹ i nie mamy nieœmiertelnoœci
+                champion.livesminus();//zabieramy ¿ycie
+            }
+            else if (bomb != nullptr && champion.getimmortal() == true) {//jeœli obiekt z assetów jest bomb¹ ale mamy nieœmiertelnoœæ
+                champion.setimmortal(false);//wy³¹czamy nieœmiertelnoœæ
+            }
+            else if (coin != nullptr) {//jeœli obiekt z assetów jest coinem
+                champion.pointsplus();//dodajemy 20 punktów
+            }
+            else if (shield != nullptr) {//jeœli obiekt z assetów jest tarcz¹
+                champion.setimmortal(true);//nieœmiertelnoœæ jest w³¹czona
+            }
+            else if (aid != nullptr) {//jeœli obiekt z assetów jest apteczk¹
+                champion.livesplus();//+1 zycie
+            }
+        }
+    }
     for (AnimowaneAssety* asset:assets) {
         Bomb* bomb = dynamic_cast<Bomb*>(asset);
         Coin* coin = dynamic_cast<Coin*>(asset);
@@ -71,9 +105,6 @@ void Game::checkCollisions()
                     //zmienna alive po zderzeniu zmieniana jest na false
                     bullet->alive = false;
                     //dynamic casty aby sprawdziæ z jakim obiektem mamy doczynienia
-                    
-                    
-                    
                     if (bull != nullptr) {//jeœli obiek z bullets jest bulletem 
                         asset->alive = false;
                         if (coin != nullptr) {//jeœli obiekt z assetów jest coinem
@@ -99,10 +130,7 @@ void Game::checkCollisions()
                         }
                     }
                 }
-        }
-        if (champion.getGlobalBounds().intersects(asset->getGlobalBounds())) {
-            std::cout << "dupa" << std::endl;
-
+                
         }
     }
 }
@@ -139,6 +167,7 @@ void Game::processEvents()
                     champion.changetexture("bieg2.png");
                 }
             }
+           
         }
         else if ((event.type == sf::Event::MouseButtonPressed && (event.mouseButton.button == sf::Mouse::Right || event.mouseButton.button == sf::Mouse::Left))&&moved==true)
         {
@@ -156,6 +185,7 @@ void Game::processEvents()
                 //tworzenie pocisku
                 newbullet = new Bullet(weapon.gettipPosition().x, weapon.gettipPosition().y, normalizategunmouse.x * 400, normalizategunmouse.y * 400,degrees);
                 bullets.emplace_back(newbullet);
+                weapon.setTexture("weapon.png");
             }
             if (event.mouseButton.button == sf::Mouse::Right) {
                 //tworzenie pocisku typu net
@@ -164,6 +194,7 @@ void Game::processEvents()
                 float degrees = static_cast<float>(angle * 180 / 3.14159265358979323846);
                 newnet = new Net(weapon.gettipPosition().x, weapon.gettipPosition().y, normalizategunmouse.x * 400, normalizategunmouse.y * 400, degrees);
                 bullets.emplace_back(newnet);
+                weapon.setTexture("weapon2.png");
             }
         }
         else if (event.type == sf::Event::KeyReleased)
@@ -181,6 +212,13 @@ void Game::processEvents()
 
 void Game::update(float deltaTime)
 {
+    std::string str = std::to_string(champion.getpoints());
+    text.setString("SCORE:"+str);
+    text2.setString("ABY ROZPOCZAC GRE WCISNIJ A LUB D");
+    text.setFillColor(sf::Color::Black);
+    text2.setOrigin(text2.getGlobalBounds().width / 2, text2.getGlobalBounds().height / 2);
+    text2.setFillColor(sf::Color::Black);
+    text2.setPosition(window.getSize().x/2,150);
     //poruszanie sie championa i broni
     champion.update(deltaTime);
     weapon.update(deltaTime);
@@ -254,8 +292,12 @@ void Game::render()
         obiekt->draw(window);
 
     }
-    window.display();
 
+    window.draw(text);
+    if (!moved) {
+        window.draw(text2);
+    }
+    window.display();
 }
 
 void Game::spawnAsset()

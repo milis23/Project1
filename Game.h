@@ -14,21 +14,24 @@
 #include<Windows.h>
 #include<cmath>
 #include"Net.h"
+#include<string>
 class Game
 {
 public:
     Game();
     ~Game();
     void run();
-
     int framecounter = 0;
-
+    sf::Vector2f scale;
 private:
     bool moved = false;
     sf::RenderWindow window;
     Background background;
     Champion champion;
     Weapon weapon;
+    sf::Font font;
+    sf::Text text;
+    sf::Text text2;
     sf::Clock clock;
     float spawnTimer=0;
     float spawnInterval = 1;
@@ -41,7 +44,6 @@ private:
     void update(float deltaTime);
     void render();
     void checkCollisions();
-    void setAlive(bool ali);
 };
 
 #endif // GAME_H

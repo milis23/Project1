@@ -22,6 +22,8 @@ public:
     bool getimmortal();
     void pointsplus();
     void pointsminus();
+    bool getmovingleft();
+    sf::FloatRect getGlobalBounds() const;
 private:
     sf::Texture m_texture;
     sf::Sprite m_sprite;

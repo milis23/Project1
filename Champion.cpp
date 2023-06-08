@@ -13,7 +13,9 @@ void Champion::setPosition(float x, float y)
     m_weapon.updatePosition(m_position);
 
 }
-
+bool Champion::getmovingleft() {
+    return m_isMovingLeft;
+}
 void Champion::setTexture(const std::string& texturePath)
 {
     if (!m_texture.loadFromFile(texturePath))
@@ -49,7 +51,13 @@ void Champion::update(float deltaTime)
     m_sprite.setPosition(m_position);
     m_weapon.updatePosition(m_position);
 }
-
+sf::FloatRect Champion::getGlobalBounds() const
+{
+    sf::FloatRect bounds = m_sprite.getGlobalBounds();
+    bounds.left += getPosition().x;
+    bounds.top += getPosition().y;
+    return bounds;
+}
 void Champion::changetexture(const std::string& texturePath) {
     if (!m_texture.loadFromFile(texturePath))
     {
@@ -93,19 +101,19 @@ void Champion::livesminus() {
 }
 
 void Champion::livesplus() {
-    lives += 1;
+    if(lives<=2)
+        lives += 1;
+
 }
 
 int Champion::getlives() {
     return lives;
 }
 void Champion::pointsminus() {
-    points+=10;
-    std::cout << points << std::endl;
+    points-=10;
 }
 void Champion::pointsplus() {
     points+=10;
-    std::cout << points << std::endl;
 }
 int Champion::getpoints() {
     return points;

@@ -6,11 +6,17 @@ void Weapon::setTexture(const std::string& texturePath)
     {
         // Obs³uga b³êdu ³adowania tekstury broni
     }
-    weapontipposition.x = m_sprite.getPosition().x + m_sprite.getGlobalBounds().width;
-    weapontipposition.y = m_sprite.getPosition().y + m_sprite.getGlobalBounds().height / 2;
     m_sprite.setTexture(m_texture);
-    m_sprite.setScale(2.5, 2.5);
-    
+    if (m_isMovingLeft) {
+        m_sprite.setScale(-2.5, 2.5);
+        weapontipposition.x = m_sprite.getPosition().x - m_sprite.getGlobalBounds().width;
+        weapontipposition.y = m_sprite.getPosition().y + m_sprite.getGlobalBounds().height / 2;
+    }
+    if (m_isMovingRight){
+        m_sprite.setScale(2.5, 2.5);
+        weapontipposition.x = m_sprite.getPosition().x + m_sprite.getGlobalBounds().width;
+        weapontipposition.y = m_sprite.getPosition().y + m_sprite.getGlobalBounds().height / 2;
+    }
 }
 
 void Weapon::setPosition(float x, float y)
@@ -30,7 +36,7 @@ void Weapon::draw(sf::RenderWindow& window)
 }
 Weapon::Weapon() : m_movementSpeed(200.0f), m_isMovingLeft(false), m_isMovingRight(false)
 {
-
+    m_sprite.setScale(2.5, 2.5);
 }
 
 void Weapon::setMovementSpeed(float speed)
@@ -44,6 +50,7 @@ void Weapon::update(float deltaTime)
     if (m_isMovingLeft)
     {
         m_position.x -= m_movementSpeed * deltaTime;
+
 
     }
     else if (m_isMovingRight)
@@ -64,7 +71,9 @@ void Weapon::handleInput(sf::Keyboard::Key key, bool isPressed)
     if (key == sf::Keyboard::A)
     {
         m_isMovingLeft = isPressed;
-        m_sprite.setScale(-2.5f, 2.5f);
+        if (m_isMovingLeft) {
+            m_sprite.setScale(-2.5f, 2.5f);
+        }
         weapontipposition.x = m_sprite.getPosition().x-m_sprite.getGlobalBounds().width;
         weapontipposition.y = m_sprite.getPosition().y + m_sprite.getGlobalBounds().height / 2;
 
@@ -73,7 +82,9 @@ void Weapon::handleInput(sf::Keyboard::Key key, bool isPressed)
     else if (key == sf::Keyboard::D)
     {
         m_isMovingRight = isPressed;
-        m_sprite.setScale(2.5f, 2.5f); // Resetowanie skali (brak obrotu)
+        if (m_isMovingRight) {
+            m_sprite.setScale(2.5f, 2.5f); // Resetowanie skali (brak obrotu)
+        }
         weapontipposition.x = m_sprite.getPosition().x + m_sprite.getGlobalBounds().width;
         weapontipposition.y = m_sprite.getPosition().y + m_sprite.getGlobalBounds().height / 2;
     }
